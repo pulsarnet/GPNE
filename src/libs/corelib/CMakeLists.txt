@@ -1,0 +1,87 @@
+configure_file(${CMAKE_SOURCE_DIR}/cmake/config.h.cmake ${CMAKE_BINARY_DIR}/config.h)
+include_directories(${CMAKE_BINARY_DIR})
+set(SOURCES
+        ActionManager.cpp
+        ActionManager.h
+        ApplicationProjectController.cpp
+        ApplicationProjectController.h
+        Constants.h
+        Core.cpp
+        MainWindow.cpp
+        MainWindow.h
+        Core.h
+        DocumentManager.cpp
+        DocumentManager.h
+        EditorManager.cpp
+        EditorManager.h
+        EditorViewManager.cpp
+        EditorViewManager.h
+        IDocument.cpp
+        IDocument.h
+        IEditor.cpp
+        IEditor.h
+        IEditorFactory.h
+        Project.cpp
+        Project.h
+        FileRef.cpp
+        FileRef.h
+        RecentProjectsManager.cpp
+        RecentProjectsManager.h
+        ProjectUtil.cpp
+        ProjectUtil.h
+        PropertyMap.cpp
+        PropertyMap.h
+        PluginInterface.h
+        Settings.cpp
+        Settings.h
+        XmlSettingsFormat.cpp
+        XmlSettingsFormat.h
+        viz/Buhheim.cpp
+        viz/Buhheim.h
+        viz/Graph.cpp
+        viz/Graph.h
+        viz/SugiyamaLayout.cpp
+        viz/SugiyamaLayout.h
+        task/CancellationToken.cpp
+        task/CancellationToken.h
+        task/ProgressTaskWidget.cpp
+        task/ProgressTaskWidget.h
+        task/Task.cpp
+        task/Task.h
+        task/TaskListWidget.cpp
+        task/TaskListWidget.h
+        task/TaskManager.cpp
+        task/TaskManager.h
+        ui/NewProjectWindow.cpp
+        ui/NewProjectWindow.h
+        ui/ProjectListDialog.cpp
+        ui/ProjectListDialog.h
+        ui/ProjectListItem.cpp
+        ui/ProjectListItem.h
+        ui/SplittableComponentsFactory.cpp
+        ui/SplittableComponentsFactory.h
+        IDockWindow.cpp
+        IDockWindow.h
+        IDockWindowFactory.h
+        DockWindowManager.cpp
+        DockWindowManager.h
+        ReflectionExt.h
+)
+
+qt_add_resources(QT_RESOURCES resources/resources.qrc)
+add_library(${TARGET_NAME}_corelib STATIC ${SOURCES} ${QT_RESOURCES})
+target_link_libraries(${TARGET_NAME}_corelib PUBLIC
+        qtpropertybrowser
+        qtadvanceddocking-qt6
+        Qt6::Widgets
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Svg
+        Qt6::DataVisualization
+        Qt6::Core5Compat
+        reflectcpp::reflectcpp
+)
+target_include_directories(${TARGET_NAME}_corelib PUBLIC
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/..>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/..>
+)

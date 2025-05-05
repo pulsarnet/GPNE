@@ -1,0 +1,6 @@
+[submodule "qtads"]
+	path = thirdparty/qtads
+	url = https://github.com/githubuser0xFFFF/Qt-Advanced-Docking-System.git
+[submodule "extern/vcpkg"]
+	path = extern/vcpkg
+	url = https://github.com/microsoft/vcpkg.git

@@ -1,0 +1,46 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="/">
+        <file>images/tools/place.svg</file>
+        <file>images/tools/connect.svg</file>
+        <file>images/tools/inhibitor.svg</file>
+        <file>images/tools/move.svg</file>
+        <file>images/tools/transition.svg</file>
+        <file>images/tools/rotation.svg</file>
+        <file>images/tools/remove.svg</file>
+        <file>images/reload.svg</file>
+        <file>images/close.png</file>
+        <file>styles/style.qss</file>
+        <file>fonts/JetBrainsMono-Medium.ttf</file>
+        <file>images/tools/marker.svg</file>
+        <file>images/fullscreen.svg</file>
+        <file>images/minimize.svg</file>
+        <file>images/close.svg</file>
+        <file>images/add.svg</file>
+        <file>images/play.svg</file>
+        <file>images/modeling.svg</file>
+        <file>images/decompose.svg</file>
+        <file>images/tree.svg</file>
+        <!-- simulation -->
+        <file>images/simulation/stop.svg</file>
+        <file>images/simulation/run.svg</file>
+        <file>images/simulation/pause.svg</file>
+        <file>images/simulation/step.svg</file>
+        <file>images/simulation/speeddown.svg</file>
+        <file>images/simulation/speedup.svg</file>
+
+        <!-- icons -->
+        <file>images/icons/folder-open.svg</file>
+        <file>images/icons/save.svg</file>
+        <file>images/icons/save_as.svg</file>
+        <file>images/icons/cancel.svg</file>
+        <file>images/icons/file_open.svg</file>
+        <file>images/icons/reset.svg</file>
+        <file>images/icons/create_project.svg</file>
+        <file>images/icons/folder.svg</file>
+        <file>images/icons/graph.svg</file>
+        <file>images/icons/grid.svg</file>
+        <file>images/icons/tree.svg</file>
+        <file>images/icons/synth.svg</file>
+        <file>images/icons/fit_in_view.svg</file>
+    </qresource>
+</RCC>

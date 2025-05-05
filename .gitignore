@@ -1,0 +1,12 @@
+build
+rust/target
+rust/Cargo.lock
+.git
+cmake-build-*
+.idea
+lib
+3dparty
+build_*
+.vscode
+log
+packages

@@ -1,0 +1,30 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e21e2fb..6f8a01c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -34,6 +34,12 @@ option(
+     ${_CORROSION_TOP_LEVEL}
+ )
+ 
++option(
++   INCLUDE_CORROSION
++   "Optionally include Corrosion during the CMake Process."
++   ON
++)
++
+ set(
+   CORROSION_GENERATOR_EXECUTABLE CACHE STRING
+   "Use prebuilt, non-bootstrapped corrosion-generator")
+@@ -69,8 +75,10 @@ endif()
+ #
+ # It is strongly encouraged to install Corrosion separately and use
+ # `find_package(Corrosion REQUIRED)` instead if that works with your workflow.
+-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+-include(Corrosion)
++if (NOT INCLUDE_CORROSION)
++    list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
++    include(Corrosion)
++endif ()
+ 
+ # Testing
+ if (CORROSION_BUILD_TESTS)

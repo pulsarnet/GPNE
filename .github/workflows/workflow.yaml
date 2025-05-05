@@ -1,0 +1,72 @@
+name: CMake on a specific platform
+
+on:
+  push:
+    branches: [ "develop"]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+          include:
+            - os: windows-2022
+              preset: dev
+            - os: ubuntu-latest
+              preset: dev
+            - os: macos-15
+              preset: dev
+            - os: ubuntu-24.04-arm
+              preset: dev
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      VCPKG_FEATURE_FLAGS: "manifests,versions"
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Install Qt
+        uses: jdpurcell/install-qt-action@v5
+        with:
+          cache: 'true'
+          version: '6.9.0'
+          modules: 'qtdatavis3d qt5compat'
+
+      - name: Cache vcpkg packages
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/extern/vcpkg/packages
+            ${{ github.workspace }}/extern/vcpkg/installed
+            ${{ github.workspace }}/extern/vcpkg/downloads
+            ${{ github.workspace }}/extern/vcpkg/buildtree
+          key: vcpkg-${{ runner.os }}-${{ matrix.triplet }}-${{ hashFiles('vcpkg.json') }}
+
+      - name: Init MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        if: runner.os == 'Windows'
+# when qtdatavis3d is available for arm64, we can uncomment this
+#        with:
+#          arch: ${{ runner.arch == 'ARM64' && 'arm64' || 'x64' }}
+
+      - name: Prepare linux build env
+        if: runner.os == 'Linux'
+        run: |
+          echo "QT_QPA_PLATFORM=offscreen" >> $GITHUB_ENV
+
+      - name: Bootstrap vcpkg
+        if: steps.cache.outputs.cache-hit != 'true'
+        shell: bash
+        run: ./extern/vcpkg/bootstrap-vcpkg.sh -disableMetrics
+
+      - name: Run Cmake
+        run:
+          cmake --workflow --preset ${{ matrix.preset }}

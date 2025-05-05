@@ -1,0 +1,31 @@
+{
+  "name": "gpne",
+  "version-string": "0.3.0",
+  "builtin-baseline": "41c447cc210dc39aa85d4a5f58b4a1b9e573b3dc",
+  "dependencies": [
+    "pkgconf",
+    {
+      "name": "reflectcpp",
+      "version>=": "0.19.0",
+      "features": [
+        "xml"
+      ]
+    },
+    {
+      "name": "boost-multi-index",
+      "version>=": "1.88.0"
+    },
+    {
+      "name": "boost-callable-traits",
+      "version>=": "1.88.0"
+    },
+    {
+      "name": "catch2",
+      "version>=": "3.8.1"
+    },
+    {
+      "name": "corrosion",
+      "version>=": "0.5.2"
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": { "major": 3, "minor": 30 },
+    "configurePresets": [
+        {
+            "name": "base",
+            "generator": "Ninja",
+            "hidden": true,
+            "environment": {
+                "VCPKG_ROOT": "${sourceDir}/extern/vcpkg"
+            },
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/extern/vcpkg/scripts/buildsystems/vcpkg.cmake"
+            }
+        },
+        {
+            "name": "dev",
+            "binaryDir": "${sourceDir}/build/cmake-dev",
+            "inherits": "base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "BUILD_TESTING": "ON"
+            }
+        },
+        {
+            "name": "release",
+            "binaryDir": "${sourceDir}/build/cmake-release",
+            "inherits": "base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "profile",
+            "binaryDir": "${sourceDir}/build/cmake-profile",
+            "inherits": "base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+            }
+        }
+    ],
+    "buildPresets": [
+        { "name":  "dev", "configurePreset": "dev", "configuration": "Debug", "jobs": 0 },
+        { "name":  "release", "configurePreset": "release", "configuration": "Release", "jobs": 0 },
+        { "name":  "profile", "configurePreset": "profile", "configuration": "RelWithDebInfo", "jobs": 0 }
+    ],
+    "testPresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "output": {
+                "outputOnFailure": true,
+                "debug": true
+            },
+            "execution": {
+                "noTestsAction": "ignore",
+                "stopOnFailure": true
+            }
+        },
+        {
+            "name": "dev",
+            "inherits": ["base"],
+            "configurePreset": "dev"
+        },
+        {
+            "name": "release",
+            "inherits": ["base"],
+            "configurePreset": "release"
+        },
+        {
+            "name": "profile",
+            "inherits": ["base"],
+            "configurePreset": "profile"
+        }
+    ],
+    "packagePresets": [
+        {
+            "name": "default",
+            "configurePreset": "release",
+            "generators": ["WIX"]
+        }
+    ],
+    "workflowPresets": [
+        {
+            "name": "dev",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "dev"
+                },
+                {
+                    "type": "build",
+                    "name": "dev"
+                },
+                {
+                    "type": "test",
+                    "name": "dev"
+                }
+            ]
+        },
+        {
+            "name": "release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "release"
+                },
+                {
+                    "type": "build",
+                    "name": "release"
+                },
+                {
+                    "type": "test",
+                    "name": "release"
+                }
+            ]
+        },
+        {
+            "name": "profile",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "profile"
+                },
+                {
+                    "type": "build",
+                    "name": "profile"
+                },
+                {
+                    "type": "test",
+                    "name": "profile"
+                }
+            ]
+        }
+    ]
+}

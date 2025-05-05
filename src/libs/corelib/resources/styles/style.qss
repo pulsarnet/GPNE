@@ -1,0 +1,164 @@
+
+/*
+backgroundColor = #F0F0F0
+foregroundColor = #403F53
+selectionBackgroundColor = #D3E8F8
+selectionForegroundColor = #403F53
+accentColor = #2AA298
+separatorsColor = #D9D9D9
+highlightColor = #CCCCCC
+*/
+
+QToolButton::menu-indicator {
+    image: none;
+}
+
+QToolButton {
+    border: none;
+}
+
+QSplitter {
+  spacing: 0px;
+  padding: 0px;
+  margin: 0px;
+}
+
+QSplitter::handle {
+  background-color: #D9D9D9;
+  border: 0px;
+  spacing: 0px;
+  padding: 0px;
+  margin: 0px;
+
+  height: 1px;
+}
+
+QTabWidget {
+    /* background: #FFFFFF; */
+}
+
+QTabWidget::tab-bar {
+    border-bottom: 3px solid black;
+    /* padding: 0px; */
+    /* margin: 0px; */
+    left: 0px;
+}
+
+QTabWidget::pane {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    background-color: white;
+}
+
+GraphicsView {
+    background: #FFFFFF;
+    border: none;
+}
+
+QTabBar::tab {
+    /* background: #lightgray; */
+    background: #FFFFFF;
+    border: none;
+    min-width: 8ex;
+    min-height: 25px;
+    padding: 5px;
+}
+
+QTabBar::tab:hover {
+    /* background: #B4B4B4; */
+    background: #CCCCCC;
+}
+
+QTabBar::tab:selected {
+    /* background: #B4B4B4; */
+    background: #D3E8F8;
+    color: #403F53;
+}
+
+QTabBar::tab:selected {
+    border-bottom: 2px solid #2AA298;
+}
+
+SimulationWidget {
+    background: white;
+    border-radius: 16px;
+}
+
+SimulationWidget > QLabel {
+    color: black
+}
+
+
+QTabBar::close-button {
+    image: url(:/images/close.svg);
+}
+
+/*
+QMenu {
+    padding: 0;
+}
+*/
+
+#tool-bar-menu {
+    background-color: rgb(150, 150, 150);
+    /* color: #000000;  White text */
+    icon-size: 20px;
+}
+
+#tool-bar-menu::item {
+    background-color: transparent;
+    height: 40px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+#tool-bar-menu::item:selected {
+    background-color: rgb(120, 120, 120);
+    border-radius: 5px;
+}
+
+#tool-bar-menu::icon {
+    padding: 10px;
+    margin: 0px;
+}
+
+/*
+QMenuBar {
+    padding: 0;
+}
+
+QMenuBar::item {
+    padding: 8px 12px;
+    background: transparent;
+}
+
+QMenuBar::item:selected, QMenu::item:selected {
+    background: #EEEEEE;
+    color: #403F53;
+}
+
+QMenu::item {
+    padding: 3px 20px;
+}
+*/
+
+QTableView {
+    /* background: white; */
+}
+
+
+QToolTip {
+    background-color: lightgray;
+    color: black;
+    border: 1px solid gray;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+QDockWidget::title {
+    text-align: left;
+    background: white;
+    border: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
