@@ -9,3 +9,8 @@ target_link_libraries(actionmanager_test PRIVATE ${TARGET_NAME}_corelib Qt::Test
 qt_add_executable(projectutil_test projectutil.cpp)
 add_test(NAME projectutil_test COMMAND projectutil_test)
 target_link_libraries(projectutil_test PRIVATE ${TARGET_NAME}_corelib Qt::Test)
+
+include(Catch)
+add_executable(propertymap_test propertymap.cpp)
+target_link_libraries(propertymap_test PRIVATE ${TARGET_NAME}_corelib Catch2::Catch2WithMain)
+catch_discover_tests(propertymap_test)

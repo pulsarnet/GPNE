@@ -4,8 +4,12 @@
 
 #ifndef PROPERTYMAP_H
 #define PROPERTYMAP_H
-#include <map>
-#include <QObject>
+
+#include <QLatin1StringView>
+#include <boost/multi_index_container.hpp>
+#include <boost/multi_index/member.hpp>
+#include <boost/multi_index/ordered_index.hpp>
+#include <boost/multi_index/tag.hpp>
 
 class QtProperty;
 
@@ -23,8 +27,29 @@ public:
     void removeProperty(QLatin1StringView);
 
 private:
-    std::map<QtProperty*, QLatin1String> m_propertyToId;
-    std::map<QLatin1String, QtProperty*> m_idToProperty;
+    struct Entry {
+        QtProperty* property;
+        QLatin1StringView id;
+    };
+
+    struct ByProperty {};
+    struct ById {};
+
+    using Container = boost::multi_index_container<
+        Entry,
+        boost::multi_index::indexed_by<
+            boost::multi_index::ordered_unique<
+                boost::multi_index::tag<ByProperty>,
+                boost::multi_index::member<Entry, QtProperty*, &Entry::property>
+            >,
+            boost::multi_index::ordered_unique<
+                boost::multi_index::tag<ById>,
+                boost::multi_index::member<Entry, QLatin1StringView, &Entry::id>
+            >
+        >
+    >;
+
+    Container m_properties;
 };
 
 #endif // PROPERTYMAP_H

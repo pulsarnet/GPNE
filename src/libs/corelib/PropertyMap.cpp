@@ -4,43 +4,63 @@
 
 #include "PropertyMap.h"
 
+/**
+* @brief Adds a new property-identifier mapping
+* @param property Pointer to QtProperty to add
+* @param id String identifier for the property
+* @return true if mapping was added successfully, false if either property or id already exists
+*/
 bool PropertyMap::addProperty(QtProperty* property, QLatin1StringView id)
 {
-    auto propIt = m_propertyToId.find(property);
-    if (propIt != m_propertyToId.end()) {
+    if (!property || id.isEmpty()) {
         return false;
     }
 
-    auto idIt = m_idToProperty.find(id);
-    if (idIt != m_idToProperty.end()) {
-        return false;
-    }
-
-    m_propertyToId.insert({property, id});
-    m_idToProperty.insert({id, property});
-    return true;
+    auto [it, success] = m_properties.insert({property, id});
+    return success;
 }
 
+/**
+* @brief Looks up a property by its identifier
+* @param id The identifier to search for
+* @return Pointer to the corresponding QtProperty, or nullptr if not found
+*/
 QtProperty* PropertyMap::property(QLatin1StringView id) const
 {
-    auto it = m_idToProperty.find(id);
-    if (it == m_idToProperty.end()) {
-        return nullptr;
-    }
+    const auto& idIndex = m_properties.get<ById>();
+    auto it = idIndex.find(id);
 
-    return it->second;
+    return it != idIndex.end() ? it->property : nullptr;
 }
 
-QLatin1StringView PropertyMap::id(QtProperty* prop) const
+/**
+* @brief Looks up an identifier by its property pointer
+* @param property The property pointer to search for
+* @return The corresponding identifier, or empty QLatin1StringView if not found
+*/
+QLatin1StringView PropertyMap::id(QtProperty* property) const
 {
-    auto it = m_propertyToId.find(prop);
-    if (it == m_propertyToId.end()) {
-        return {};
-    }
-
-    return it->second;
+    const auto& propertyIndex = m_properties.get<ByProperty>();
+    auto it = propertyIndex.find(property);
+    return it != propertyIndex.end() ? it->id : QLatin1StringView();
 }
 
-void PropertyMap::removeProperty(QtProperty* prop) { m_propertyToId.erase(prop); }
+/**
+* @brief Removes a mapping by property pointer
+* @param property The property pointer to remove
+*/
+void PropertyMap::removeProperty(QtProperty* property)
+{
+    auto& propertyIndex = m_properties.get<ByProperty>();
+    propertyIndex.erase(property);
+}
 
-void PropertyMap::removeProperty(QLatin1StringView id) { m_idToProperty.erase(id); }
+/**
+* @brief Removes a mapping by identifier
+* @param id The identifier to remove
+*/
+void PropertyMap::removeProperty(QLatin1StringView id)
+{
+    auto& idIndex = m_properties.get<ById>();
+    idIndex.erase(id);
+}
